@@ -1,23 +1,32 @@
 package com.example.wishes.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import java.util.Map;
-
-
+@Entity
 public class WishList {
-    private int id;
-    private String title;
-    private Map<Integer, Wish> wishes;
 
-    public WishList(int id, String title, Map<Integer, Wish> wishes) {
-        this.id = id;
-        this.title = title;
-        this.wishes = wishes;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String title;
+
+    @OneToMany(mappedBy = "wishList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Wish> wishes = new ArrayList<>();
+
+    public WishList() {
+        // Default no-args constructor
     }
 
+    public WishList(String title) {
+        this.title = title;
+    }
 
-
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -34,11 +43,11 @@ public class WishList {
         this.title = title;
     }
 
-    public Map<Integer, Wish> getWishes() {
+    public List<Wish> getWishes() {
         return wishes;
     }
 
-    public void setWishes(Map<Integer, Wish> wishes) {
+    public void setWishes(List<Wish> wishes) {
         this.wishes = wishes;
     }
 }

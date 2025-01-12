@@ -1,19 +1,34 @@
 package com.example.wishes.model;
 
-//import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
-
+@Entity
 public class Wish {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
+
     private boolean isCompleted;
 
-    public Wish(int id, String title, boolean isCompleted) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(name = "wish_list_id") // Foreign key column in Wish table
+    @JsonBackReference
+    private WishList wishList;
+
+    public Wish() {
+        // Default no-args constructor
+    }
+
+    public Wish(String title, boolean isCompleted) {
         this.title = title;
         this.isCompleted = isCompleted;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -36,5 +51,13 @@ public class Wish {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public WishList getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
     }
 }
