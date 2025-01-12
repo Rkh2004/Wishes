@@ -17,7 +17,6 @@ public class WishesController {
     @Autowired
     private WishesService wishesService;
 
-
     // Get all Wish Lists
     @GetMapping
     public ResponseEntity<List<WishList>> getAllWishLists() {
