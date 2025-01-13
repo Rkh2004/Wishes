@@ -49,9 +49,11 @@ public class WishesService {
         wishListRepository.deleteById(id);
     }
 
+
     //get all wishes in a specific wish list
     public List<Wish> getAllWishes(int wishListId){
-        WishList wishList = wishListRepository.findById(wishListId).orElseThrow(() -> new RuntimeException("Wish List not found"));;
+        WishList wishList = wishListRepository.findById(wishListId)
+                .orElseThrow(() -> new RuntimeException("Wish List not found"));;
         return wishList.getWishes();
     }
 
@@ -75,7 +77,7 @@ public class WishesService {
         }
         Wish wishToUpdate = wishRepository.findById(wishId).orElse(null);
         if (wishToUpdate == null) {
-            throw new RuntimeException("To-Do not found");
+            throw new RuntimeException("Wish not found");
         }
 
         wishToUpdate.setTitle(newTitle);
@@ -92,7 +94,7 @@ public class WishesService {
         }
         Wish wishToUpdate = wishRepository.findById(wishId).orElse(null);
         if (wishToUpdate == null) {
-            throw new RuntimeException("To-Do not found");
+            throw new RuntimeException("Wish not found");
         }
 
         wishToUpdate.setCompleted(isCompleted);

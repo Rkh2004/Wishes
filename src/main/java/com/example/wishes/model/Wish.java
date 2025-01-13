@@ -15,12 +15,11 @@ public class Wish {
     private boolean isCompleted;
 
     @ManyToOne
-    @JoinColumn(name = "wish_list_id") // Foreign key column in Wish table
+    @JoinColumn(name = "wish_list_id")
     @JsonBackReference
     private WishList wishList;
 
     public Wish() {
-        // Default no-args constructor
     }
 
     public Wish(String title, boolean isCompleted) {

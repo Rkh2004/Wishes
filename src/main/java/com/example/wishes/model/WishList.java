@@ -2,6 +2,7 @@ package com.example.wishes.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class WishList {
     private List<Wish> wishes = new ArrayList<>();
 
     public WishList() {
-        // Default no-args constructor
     }
 
     public WishList(String title) {
