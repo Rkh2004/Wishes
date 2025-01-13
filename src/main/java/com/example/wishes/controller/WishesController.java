@@ -40,9 +40,6 @@ public class WishesController {
     @GetMapping("/{id}")
     public ResponseEntity<WishListResponseDTO> getWishListById(@PathVariable int id) {
         WishList wishList = wishesService.getWishListByID(id);
-        if (wishList == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(wishMapper.toWishListDTO(wishList));
     }
 
@@ -57,9 +54,6 @@ public class WishesController {
     @PutMapping("/{id}")
     public ResponseEntity<WishListResponseDTO> updateWishList(@PathVariable int id, @RequestBody String newTitle) {
         WishList updatedWishList = wishesService.updateWishList(id, newTitle);
-        if (updatedWishList == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(wishMapper.toWishListDTO(updatedWishList));
     }
 
@@ -91,34 +85,27 @@ public class WishesController {
     // Update a Wish in a specific Wish List
     @PutMapping("{wishListId}/wishes/{wishId}")
     public ResponseEntity<WishResponseDTO> updateWish(@PathVariable int wishListId, @PathVariable int wishId,
-                                           @RequestBody CreateWishDTO updatedWish) {
-        try {
-            Wish wish = wishesService.updateWish(wishListId, wishId, updatedWish.getTitle(), false);
-            return ResponseEntity.ok(wishMapper.toWishDTO(wish));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+                                                      @RequestBody CreateWishDTO updatedWish) {
+
+        Wish wish = wishesService.updateWish(wishListId, wishId, updatedWish.getTitle(), false);
+        return ResponseEntity.ok(wishMapper.toWishDTO(wish));
+
     }
 
     // Mark a Wish as Completed
     @PatchMapping("/{wishListId}/wishes/{wishId}/complete")
     public ResponseEntity<WishResponseDTO> markWishCompleted(@PathVariable int wishListId, @PathVariable int wishId) {
-        try {
-            Wish wish = wishesService.markWishCompleted(wishListId, wishId, true);
-            return ResponseEntity.ok(wishMapper.toWishDTO(wish));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+
+        Wish wish = wishesService.markWishCompleted(wishListId, wishId, true);
+        return ResponseEntity.ok(wishMapper.toWishDTO(wish));
+
     }
 
     // Delete a Wish from a specific Wish List
     @DeleteMapping("/{wishListId}/wishes/{wishId}")
     public ResponseEntity<Void> deleteWish(@PathVariable int wishListId, @PathVariable int wishId) {
-        try {
+
             wishesService.deleteWish(wishListId, wishId);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 }
