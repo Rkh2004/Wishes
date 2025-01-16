@@ -15,6 +15,10 @@ public class WishList {
 
     private String title;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "wishList", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Wish> wishes = new ArrayList<>();
@@ -39,6 +43,14 @@ public class WishList {
         return title;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -50,4 +62,5 @@ public class WishList {
     public void setWishes(List<Wish> wishes) {
         this.wishes = wishes;
     }
+
 }
